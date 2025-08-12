@@ -32,12 +32,14 @@ async function performOtaTransfer(otaChar, firmwareArrayBuffer) {
     new DataView(sizeBuf).setUint32(0, firmwareArrayBuffer.byteLength, true);
     await otaChar.writeValue(new Uint8Array(sizeBuf));
 
-    // DATA (chunked writes + tiny pacing; conservative chunk size on Web)
+    // DATA (chunked writes + pacing with 30ms delay)
     const fw = new Uint8Array(firmwareArrayBuffer);
     const chunk = 128;
     for (let i = 0; i < fw.length; i += chunk) {
         await otaChar.writeValue(fw.slice(i, Math.min(i + chunk, fw.length)));
-        await new Promise(r => setTimeout(r, 2));
+
+        // 30 milliseconds delay after each chunk to avoid packet loss
+        await new Promise(r => setTimeout(r, 30));
     }
 
     // DONE (with response)

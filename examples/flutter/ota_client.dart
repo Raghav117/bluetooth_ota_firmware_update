@@ -67,22 +67,31 @@ Future<void> performOtaTransfer(
   final chunkSize = (d.mtuNow > 0 ? d.mtuNow : 23) - 3;
   print("📦 Sending firmware (${fw.length} bytes) in chunks of $chunkSize...");
 
-  // OPEN
+  // Step 1: Send OPEN command
   await otaChar.write(utf8.encode("OPEN"), withoutResponse: false);
+  await Future.delayed(
+    const Duration(milliseconds: 30),
+  ); // Allow ESP32 to process
 
-  // SIZE
+  // Step 2: Send firmware size
   final size = ByteData(4)..setUint32(0, fw.length, Endian.little);
   await otaChar.write(size.buffer.asUint8List(), withoutResponse: false);
+  await Future.delayed(const Duration(milliseconds: 30)); // Prevent packet loss
 
-  // DATA
+  // Step 3: Send firmware data
   for (var i = 0; i < fw.length; i += chunkSize) {
     final end = (i + chunkSize > fw.length) ? fw.length : i + chunkSize;
     await otaChar.write(fw.sublist(i, end), withoutResponse: true);
-    await Future.delayed(const Duration(milliseconds: 2));
+    await Future.delayed(const Duration(milliseconds: 30));
+    // ↑ 30ms delay after each chunk ensures ESP32 has time to write to flash
+    //   and prevents BLE buffer overflow.
   }
 
-  // DONE
+  // Step 4: Send DONE command
   await otaChar.write(utf8.encode("DONE"), withoutResponse: false);
+  await Future.delayed(
+    const Duration(milliseconds: 30),
+  ); // Final pause for ESP32
   print("✅ OTA update completed");
 }
 

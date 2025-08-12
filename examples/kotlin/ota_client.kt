@@ -115,6 +115,9 @@ suspend fun write(
     }
 
     result.await()
+
+    // Add pacing delay after each write to prevent ESP32 OTA packet loss
+    delay(30) // 30 ms is safe; adjust if stable at lower values
 }
 
 // ---- 5) OTA transfer ----
@@ -135,7 +138,8 @@ suspend fun performOtaTransfer(gatt: BluetoothGatt, ch: BluetoothGattCharacteris
         val end = (off + payload).coerceAtMost(firmware.size)
         write(gatt, ch, firmware.copyOfRange(off, end), withResponse = false)
         off = end
-        delay(2) // pacing
+         // Add pacing delay after each write to prevent ESP32 OTA packet loss
+    delay(30) // 30 ms is safe; adjust if stable at lower values
     }
 
     // DONE

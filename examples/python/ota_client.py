@@ -46,7 +46,12 @@ async def ota_update():
         for i in range(0, len(firmware_data), chunk_size):
             chunk = firmware_data[i:i+chunk_size]
             await client.write_gatt_char(OTA_CHARACTERISTIC_UUID, chunk)
-            progress = (i + chunk_size) / len(firmware_data) * 100
+            
+            # Delay after each chunk to avoid packet loss / buffer overflow on ESP32
+            await asyncio.sleep(0.03)  # 30 milliseconds delay
+        
+        
+           progress = (i + chunk_size) / len(firmware_data) * 100
             print(f"   {progress:.1f}% complete", end="\r")
         
         print("\n✅ OTA update complete")
