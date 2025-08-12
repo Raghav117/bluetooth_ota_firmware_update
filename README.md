@@ -154,65 +154,26 @@ The library implements a simple but robust OTA protocol:
 
 ## Examples
 
-### Basic Example
-Simple usage with default settings and basic callbacks.
+This library includes ready-to-use examples for various platforms and use cases:
 
-### Custom UUIDs Example
-Demonstrates how to use custom service and characteristic UUIDs.
+| Example | Description |
+|---------|-------------|
+| [**Basic Example**](examples/BasicExample) | Minimal setup for performing OTA firmware updates over Bluetooth. |
+| [**Advanced Example**](examples/AdvancedExample) | Demonstrates advanced features like progress tracking and error handling. |
+| [**Custom UUIDs**](examples/CustomUUIDs) | Shows how to use custom Service and Characteristic UUIDs. |
+| [**Robot OTA Example**](examples/RobotOTAExample) | Demonstrates OTA updates in a robotics project. |
+| [**Flutter Client**](examples/flutter) | Cross-platform Flutter app to trigger and monitor OTA updates. |
+| [**Android (Kotlin) Client**](examples/kotlin) | Android app example using Kotlin for OTA firmware updates. |
+| [**Python Client**](examples/python/ota_client.py) | Python script for initiating OTA updates from desktop or Raspberry Pi. |
+| [**Web Client**](examples/web) | Web Bluetooth API example to perform OTA updates from a browser. |
 
-### Advanced Example
-Shows advanced features like:
-- Dynamic configuration
-- Multiple LED status indicators
-- Comprehensive command handling
-- Status reporting
-- Connection monitoring
 
-## Client Applications
+---
 
-To perform OTA updates, you'll need a BLE client application. The library is compatible with:
-
-- **nRF Connect** (mobile app)
-- **BLE Scanner** (mobile app)
-- **Custom BLE client applications**
-- **Python scripts using `bleak` library**
-- **Node.js applications using `noble` library**
-
-## Error Handling
-
-The library includes comprehensive error handling:
-
-- **Connection loss**: Automatically aborts update and re-advertises
-- **Size mismatch**: Validates received data against expected size
-- **Write failures**: Handles Update.write() failures gracefully
-- **Memory issues**: Checks available space before starting update
-- **Invalid commands**: Ignores malformed commands
-
-## Performance Considerations
-
-- **Packet Size**: Default 512 bytes, configurable up to 1024 bytes
-- **Buffer Size**: Default 4096 bytes, configurable up to 8192 bytes
-- **Memory Usage**: Approximately 2-4KB RAM for library overhead
-- **Transfer Speed**: Typically 1-5KB/s depending on connection quality
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Update fails with "Not enough space"**
-   - Check available flash memory
-   - Reduce firmware size
-   - Use `Update.begin(UPDATE_SIZE_UNKNOWN)` for automatic size detection
-
-2. **Connection drops during update**
-   - Ensure stable BLE connection
-   - Reduce packet size if needed
-   - Check for interference
-
-3. **Update verification fails**
-   - Ensure firmware is compiled for correct ESP32 variant
-   - Check flash partition table
-   - Verify firmware integrity
+### 🔹 Running an Example
+1. Navigate to the example folder you want to try.
+2. Open the example’s for setup instructions.
+3. Ensure your ESP32 device is running the compatible OTA server code before starting.
 
 ### Debug Information
 
@@ -232,7 +193,7 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 ## Version History
 
-- **v1.0.0**: Initial release with basic OTA functionality
+- **v1.0.1**: Release with OTA functionality
 - Configurable UUIDs
 - Progress and status callbacks
 - Command interface
