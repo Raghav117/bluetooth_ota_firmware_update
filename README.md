@@ -193,7 +193,7 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 ## Version History
 
-- **v1.0.1**: Release with OTA functionality
+- **v1.0.3**: Release with OTA functionality
 - Configurable UUIDs
 - Progress and status callbacks
 - Command interface
