@@ -293,6 +293,7 @@ void BLEOtaUpdate::handleOtaWrite(BLECharacteristic* pCharacteristic) {
     // Handle firmware data
     if (otaReceived < otaFileSize) {
       size_t written = Update.write((uint8_t*)data, length);
+      delay(1);
       if (written > 0) {
         otaReceived += written;
         updateProgress();
