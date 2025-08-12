@@ -1,0 +1,44 @@
+# Syntax Coloring Map For BLEOtaUpdate
+
+# Datatypes (KEYWORD1)
+BLEOtaUpdate	KEYWORD1
+OtaStatus	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+begin	KEYWORD2
+setOtaProgressCallback	KEYWORD2
+setOtaStatusCallback	KEYWORD2
+setCommandCallback	KEYWORD2
+setConnectionCallback	KEYWORD2
+stop	KEYWORD2
+restart	KEYWORD2
+abortUpdate	KEYWORD2
+isConnected	KEYWORD2
+isUpdateInProgress	KEYWORD2
+getOtaStatus	KEYWORD2
+getUpdateProgress	KEYWORD2
+getUpdateTotal	KEYWORD2
+getUpdatePercentage	KEYWORD2
+setServiceUUID	KEYWORD2
+setOtaCharacteristicUUID	KEYWORD2
+setCommandCharacteristicUUID	KEYWORD2
+setStatusCharacteristicUUID	KEYWORD2
+setMaxPacketSize	KEYWORD2
+setUpdateBufferSize	KEYWORD2
+sendStatus	KEYWORD2
+sendProgress	KEYWORD2
+loop	KEYWORD2
+
+# Constants (LITERAL1)
+IDLE	LITERAL1
+RECEIVING	LITERAL1
+COMPLETED	LITERAL1
+ERROR	LITERAL1
+ABORTED	LITERAL1
+OTA_CMD_OPEN	LITERAL1
+OTA_CMD_DONE	LITERAL1
+OTA_CMD_ABORT	LITERAL1
+DEFAULT_SERVICE_UUID	LITERAL1
+DEFAULT_OTA_CHAR_UUID	LITERAL1
+DEFAULT_COMMAND_CHAR_UUID	LITERAL1
+DEFAULT_STATUS_CHAR_UUID	LITERAL1

@@ -1,0 +1,30 @@
+{
+  "name": "BLE OTA Update",
+  "version": "1.0.0",
+  "description": "Arduino library for Bluetooth Low Energy (BLE) Over-The-Air (OTA) firmware updates with configurable service and characteristic UUIDs",
+  "keywords": "ble, ota, esp32, bluetooth, firmware, update",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Raghav117/bluetooth_ota_firmware_update.git",
+    "archive": "https://github.com/Raghav117/bluetooth_ota_firmware_update.git/archive/v1.0.0.tar.gz"
+  },
+  "authors": [
+    {
+      "name": "RaghavG1999",
+      "email": "raghavgarg.81.rg@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "frameworks": "arduino",
+  "platforms": "espressif32",
+  "dependencies": {
+    "Arduino": "*",
+    "BLEDevice": "*",
+    "Update": "*"
+  },
+  "build": {
+    "srcDir": ".",
+    "includeDir": "."
+  }
+}
