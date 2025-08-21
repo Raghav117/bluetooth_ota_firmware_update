@@ -2,6 +2,12 @@
 
 A comprehensive Arduino library for performing Over-The-Air (OTA) firmware updates over Bluetooth Low Energy (BLE) on ESP32 devices. This library provides a complete solution with configurable service UUIDs, characteristic UUIDs, progress callbacks, and command handling capabilities.
 
+## 📖 Learn More
+
+I have written a detailed article explaining how this library works, with examples and setup instructions.  
+👉 [Introducing ESP32 Bluetooth OTA Firmware Update Library](https://medium.com/@RaghavG1999/introducing-esp32-bluetooth-ota-firmware-update-library-89cec9b31d45)
+
+
 ## Features
 
 - **Configurable UUIDs**: Use default UUIDs or specify your own service and characteristic UUIDs
