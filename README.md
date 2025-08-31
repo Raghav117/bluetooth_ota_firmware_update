@@ -210,6 +210,7 @@ Check the [Wiki: Troubleshooting](https://github.com/Raghav117/bluetooth_ota_fir
 
 ## Changelog 📜
 
+- **v1.0.7 (2025-08-31)**: Improved BLE Binary Data Handling: Implemented a more robust method for extracting raw binary data (including null bytes) from BLE characteristic values, resolving issues where String::c_str() might lead to data truncation when converting to std::string for operations like OTA file size calculation. This ensures accurate processing of multi-byte binary fields.
 - **v1.0.6 (2025-08-31)**: Resolved compilation errors (e.g., "conversion from 'String' to non-scalar type 'std::string'") occurring when retrieving characteristic values due to explicit type casting requirements.
 - **v1.0.5 (2025-08-15)**: Added configurable UUIDs, progress/status callbacks, command interface, and examples.
 - **v1.0.0 (2025-08-01)**: Initial release with core OTA functionality.

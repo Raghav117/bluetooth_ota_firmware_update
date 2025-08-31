@@ -149,6 +149,7 @@ void BLEOtaUpdate::abortUpdate() {
     otaFileSize = 0;
     otaReceived = 0;
     setOtaStatus(OtaStatus::ABORTED, "Update aborted by user");
+    ESP.restart();
   }
 }
 
@@ -227,9 +228,9 @@ void BLEOtaUpdate::loop() {
 
 // Internal methods
 void BLEOtaUpdate::handleOtaWrite(BLECharacteristic* pCharacteristic) {
-  std::string value = pCharacteristic->getValue().c_str();
-  const uint8_t* data = (const uint8_t*)value.c_str();
-  size_t length = value.length();
+  String bleValue = pCharacteristic->getValue();
+  const uint8_t* data = (const uint8_t*)bleValue.c_str(); // Pointer to internal buffer
+  size_t length = bleValue.length();
 
   if (length == 0) return;
 
@@ -245,21 +246,29 @@ void BLEOtaUpdate::handleOtaWrite(BLECharacteristic* pCharacteristic) {
     }
   }
 
-  if (otaInProgress) {
-    // Handle file size (first 4 bytes after OPEN)
+if (otaInProgress) {
+    // Handle file size (first 4 bytes after OPEN command)
+    // This assumes the first actual data packet *after* OTA_CMD_OPEN is the file size.
+    // If you send the file size immediately after OPEN and it's always 4 bytes:
     if (otaFileSize == 0 && length == 4) {
+      // Direct copy works here because both are little-endian systems.
+      // otaFileSize should be a uint32_t or unsigned long
       memcpy(&otaFileSize, data, 4);
-      Serial.printf("[OTA] Update size: %u bytes\n", otaFileSize);
-      
+
+      Serial.printf("[OTA] Update size: %u bytes (0x%X)\n", otaFileSize, otaFileSize);
+
       if (!Update.begin(otaFileSize)) {
-        Serial.println("[OTA] ERROR: Not enough space");
+        
+        Serial.printf("[OTA] ERROR: Not enough space for %u bytes\n", otaFileSize);
         setOtaStatus(OtaStatus::ERROR, "Not enough space");
         otaInProgress = false;
+        ESP.restart();
         return;
       }
       setOtaStatus(OtaStatus::RECEIVING, "Receiving firmware");
-      return;
+      return; // Return after handling file size
     }
+
 
     // Handle DONE command
     if (length == 4 && memcmp(data, OTA_CMD_DONE, 4) == 0) {
@@ -269,6 +278,7 @@ void BLEOtaUpdate::handleOtaWrite(BLECharacteristic* pCharacteristic) {
         Serial.printf("[OTA] ERROR: Size mismatch! (%u/%u)\n", otaReceived, otaFileSize);
         setOtaStatus(OtaStatus::ERROR, "Size mismatch");
         Update.end(false);
+        ESP.restart();
       } else if (Update.end(true)) {
         Serial.println("[OTA] Success. Rebooting...");
         setOtaStatus(OtaStatus::COMPLETED, "Update completed successfully");
@@ -278,6 +288,7 @@ void BLEOtaUpdate::handleOtaWrite(BLECharacteristic* pCharacteristic) {
         Serial.println("[OTA] Finalize failed");
         setOtaStatus(OtaStatus::ERROR, "Update finalization failed");
         Update.printError(Serial);
+        ESP.restart();
       }
       otaInProgress = false;
       return;
