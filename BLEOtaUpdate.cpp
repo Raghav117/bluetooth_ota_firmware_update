@@ -227,7 +227,7 @@ void BLEOtaUpdate::loop() {
 
 // Internal methods
 void BLEOtaUpdate::handleOtaWrite(BLECharacteristic* pCharacteristic) {
-  std::string value = pCharacteristic->getValue();
+  std::string value = pCharacteristic->getValue().c_str();
   const uint8_t* data = (const uint8_t*)value.c_str();
   size_t length = value.length();
 
@@ -307,7 +307,7 @@ void BLEOtaUpdate::handleOtaWrite(BLECharacteristic* pCharacteristic) {
 }
 
 void BLEOtaUpdate::handleCommandWrite(BLECharacteristic* pCharacteristic) {
-  std::string value = pCharacteristic->getValue();
+  std::string value = pCharacteristic->getValue().c_str();
   if (commandCallback && value.length() > 0) {
     String command = String(value.c_str());
     commandCallback(command);
