@@ -45,7 +45,7 @@ Install via **Arduino Library Manager**:
 
 For **PlatformIO**, add to your `platformio.ini`:
 ```ini
-lib_deps = Raghav117/bluetooth_ota_firmware_update
+lib_deps = raghav117/BLE OTA Update
 ```
 
 Alternatively, manually install:
