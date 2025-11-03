@@ -74,6 +74,9 @@ public:
   // Send status updates
   void sendStatus(const String& status);
   void sendProgress(uint32_t received, uint32_t total);
+
+  // Return the server instance
+  BLEServer* getBLEServer();
   
   // Loop method (call in main loop if needed)
   void loop();
