@@ -220,6 +220,10 @@ void BLEOtaUpdate::sendProgress(uint32_t received, uint32_t total) {
   }
 }
 
+BLEServer* BLEOtaUpdate::getBLEServer() {
+  return pServer;
+}
+
 // Loop method
 void BLEOtaUpdate::loop() {
   // This method can be used for periodic tasks if needed
