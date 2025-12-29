@@ -1,6 +1,6 @@
 {
   "name": "BLE OTA Update",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Arduino library for Bluetooth Low Energy (BLE) Over-The-Air (OTA) firmware updates with configurable service and characteristic UUIDs",
   "keywords": "ble, ota, esp32, bluetooth, firmware, update",
   "repository": {
